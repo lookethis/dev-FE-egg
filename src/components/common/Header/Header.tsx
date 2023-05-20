@@ -1,16 +1,9 @@
 import React from 'react';
-import { NavLink } from 'react-router-dom';
 import styles from './Header.module.scss';
-import {
-	BsPencil,
-	BsJournalBookmark,
-	BsPatchQuestion,
-	BsCalendar4Week,
-} from 'react-icons/bs';
-import { TbLogin } from 'react-icons/tb';
 
-function Header() {
+function Header({ title }: { title: string }) {
 	return (
+<<<<<<< HEAD
 		<header className={styles.container}>
 			<nav className={styles.menu}>
 				<ul className={styles.menuList}>
@@ -77,6 +70,11 @@ function Header() {
 				</ul>
 			</nav>
 		</header>
+=======
+		<div className={styles.headerContainer}>
+			<header className={styles.commonHeader}>{title}</header>
+		</div>
+>>>>>>> ef225a73e688ed43f0f67c4c75979364a960c276
 	);
 }
 

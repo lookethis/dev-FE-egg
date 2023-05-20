@@ -31,7 +31,7 @@ import {
 	getBookName,
 	findWordById,
 } from '../apis/word';
-import Header from '../components/common/Header/Header';
+import Navigation from '../components/common/Navigation/Navigation';
 
 //BookList에서 Params로 받아올 bookId
 type RouteParams = {
@@ -195,7 +195,7 @@ function WordList() {
 
 	return (
 		<>
-			<Header />
+			<Navigation />
 			<main>
 				<div className={styles.container}>
 					<div className={styles.fixed}>

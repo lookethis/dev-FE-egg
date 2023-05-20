@@ -9,7 +9,8 @@ import AlertModal from '../components/common/AlertModal/AlertModal';
 import { useRecoilValue } from 'recoil';
 import { userTokenState } from '../recoil/userState';
 import { useNavigate } from 'react-router-dom';
-import Header from '../components/common/Header/Header';
+import Navigation from '../components/common/Navigation/Navigation';
+import LoginAlertModal from '../components/common/LoginAlertModal/LoginAlertModal';
 
 const baseUrl = process.env.REACT_APP_API_BASE_URL;
 
@@ -20,15 +21,22 @@ function BookList() {
 	const [deleteModalOpen, setDeleteModalOpen] = useState(false);
 	const [bookToDelete, setBookToDelete] = useState('');
 	const [alertModalOpen, setAlertModalOpen] = useState(false);
+	const [loginAlertModalOpen, setLoginAlertModalOpen] = useState(false);
 
 	useEffect(() => {
 		async function fetchBooks() {
 			try {
-				const response = await axios.get(`${baseUrl}/books`, {
-					headers: {
+				let url = `${baseUrl}/books/sample`;
+				let headers = {};
+
+				if (userToken) {
+					url = `${baseUrl}/books`;
+					headers = {
 						Authorization: `Bearer ${userToken}`,
-					},
-				});
+					};
+				}
+
+				const response = await axios.get(url, { headers });
 				const booksData = response.data;
 				setBooks(booksData);
 			} catch (error) {
@@ -40,12 +48,20 @@ function BookList() {
 	}, [userToken]);
 
 	const handleEdit = (bookShortId: string) => {
-		navigate(`/book/edit/${bookShortId}`);
+		if (!userToken) {
+			setLoginAlertModalOpen(true);
+		} else {
+			navigate(`/book/edit/${bookShortId}`);
+		}
 	};
 
 	const handleDeleteRequest = (bookShortId: string) => {
-		setBookToDelete(bookShortId);
-		setDeleteModalOpen(true);
+		if (!userToken) {
+			setLoginAlertModalOpen(true);
+		} else {
+			setBookToDelete(bookShortId);
+			setDeleteModalOpen(true);
+		}
 	};
 
 	const handleDeleteConfirm = async () => {
@@ -65,7 +81,7 @@ function BookList() {
 
 	return (
 		<>
-			<Header />
+			<Navigation />
 			<main>
 				<WordSearch />
 				<div className={styles.boxContainer}>
@@ -89,6 +105,9 @@ function BookList() {
 					onClose={() => setAlertModalOpen(false)}
 					message='삭제가 완료되었습니다.'
 				/>
+				{loginAlertModalOpen && (
+					<LoginAlertModal onClose={() => setLoginAlertModalOpen(false)} />
+				)}
 			</main>
 		</>
 	);

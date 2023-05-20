@@ -3,7 +3,11 @@
 	justify-content: flex-start;
 	align-items: center;
 	flex-direction: column;
+<<<<<<< HEAD
 	padding: 0 24px 0 24px;
+=======
+	padding: 24px 24px 0 24px;
+>>>>>>> ef225a73e688ed43f0f67c4c75979364a960c276
 }
 
 .list {
