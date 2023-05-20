@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from 'react';
 /**컴포넌트 */
 import Header from '../components/common/Header/Header';
-import CalendarList from '../components/Calendar/CalendarList';
 import CalendarPaper from '../components/Calendar/CalendarPaper';
+import CalendarList from '../components/Calendar/CalendarList';
 
 function CalendarPage() {
 	return (
