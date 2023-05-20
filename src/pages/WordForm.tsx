@@ -20,7 +20,7 @@ import { HiOutlinePencil } from 'react-icons/hi';
 import { useRecoilValue } from 'recoil';
 import { infoUser } from '../apis/user';
 import { userTokenState } from '../recoil/userState';
-import Header from '../components/common/Header/Header';
+import Navigation from '../components/common/Navigation/Navigation';
 
 function WordForm() {
 	const userToken = useRecoilValue(userTokenState);
@@ -246,7 +246,7 @@ function WordForm() {
 
 	return (
 		<>
-			<Header></Header>
+			<Navigation></Navigation>
 			<main>
 				<div className={styles.container}>
 					<WordHeader

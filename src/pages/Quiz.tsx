@@ -2,13 +2,12 @@ import React, { useEffect } from 'react';
 import { useNavigate } from 'react-router-dom';
 import { useRecoilValue } from 'recoil';
 import { userTokenState } from '../recoil/userState';
-import styles from '../components/QuizList/QuizList.module.scss';
-import Logo from '../components/common/Logo/Logo';
-import RegisterForm from '../components/Register/RegisterForm';
-import List, { Quiz } from '../components/QuizList/List';
+import styles from '../components/Quiz/QuizList.module.scss';
+import QuizList, { InterfaceQuiz } from '../components/Quiz/QuizList';
+import Navigation from '../components/common/Navigation/Navigation';
 import Header from '../components/common/Header/Header';
 
-const quizList: Quiz[] = [
+const quizList: InterfaceQuiz[] = [
 	{
 		id: 'four-prong',
 		title: '사지선다',
@@ -23,20 +22,18 @@ const quizList: Quiz[] = [
 	},
 ];
 
-function QuizList() {
+function Quiz() {
 	return (
 		<>
-			<Header />
+			<Header title={'퀴즈'} />
 			<main className={styles.container}>
-				<header>퀴즈</header>
-				<main>
-					{quizList.map(quiz => (
-						<List key={quiz.id} quizInfo={quiz} />
-					))}
-				</main>
+				{quizList.map(quiz => (
+					<QuizList key={quiz.id} quizInfo={quiz} />
+				))}
 			</main>
+			<Navigation />
 		</>
 	);
 }
 
-export default QuizList;
+export default Quiz;
