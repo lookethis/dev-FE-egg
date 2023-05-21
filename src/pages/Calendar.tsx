@@ -5,13 +5,18 @@ import CalendarList from '../components/Calendar/CalendarList';
 import CalendarPaper from '../components/Calendar/CalendarPaper';
 
 function CalendarPage() {
+	const [mode, setMode] = useState('words');
+
 	return (
 		<>
 			<Navigation />
 			<main>
-				<h1>버튼들어갈자리</h1>
+				<h1>
+				<button onClick={() => setMode('words')}>Words</button>
+          <button onClick={() => setMode('quizzes')}>Quizzes</button>
+				</h1>
 				<CalendarPaper />
-				<CalendarList />
+				<CalendarList mode={mode} />
 			</main>
 		</>
 	);
