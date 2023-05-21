@@ -38,12 +38,12 @@
 // 		</>
 // 	);
 // }
-
 import React, { useEffect, useState } from 'react';
 import { useRecoilValue } from 'recoil';
 import { userTokenState } from '../../recoil/userState';
 import { format, parseISO } from 'date-fns';
-import { Word } from './CalendarType';  // Word 인터페이스를 import합니다.
+import { Word, Quiz } from './CalendarType';  // Word, Quiz 인터페이스를 import합니다.
+
 
 const DUMMY_DATA = {
   words: [
@@ -85,10 +85,8 @@ const DUMMY_DATA = {
     },
   ],
 };
-type SetDataList =
-
 function CalendarList({ mode }: { mode: string }) {
-  const [dataList, setDataList] = useState([]);
+  const [dataList, setDataList] = useState<(Word | Quiz)[]>([]);
   const userToken = useRecoilValue(userTokenState);
 
   const wordsCalendarGet = async () => {
@@ -103,12 +101,10 @@ function CalendarList({ mode }: { mode: string }) {
     const getData = async () => {
       if (mode === 'words') {
         const words = await wordsCalendarGet();
-        // console.log(words)
-        // console.log(typeof words)
-        // setDataList(words);
+        setDataList(words);
       } else if (mode === 'quizzes') {
         const quizzes = await quizzesCalendarGet();
-        // setDataList(quizzes);
+        setDataList(quizzes);
       }
     };
     getData();
@@ -120,22 +116,22 @@ function CalendarList({ mode }: { mode: string }) {
         const createdAt = format(parseISO(item.createdAt), 'yyyy-MM-dd');
         if (mode === 'words') {
           const wordItem = item as Word;
-          console.log(item)
           return (
             <li key={index}>
               <h3>{wordItem.word}</h3>
               <div>{wordItem.meanings.join(', ')}</div>
-              <div>{wordItem.createdAt}</div>
+              <div>{createdAt}</div>
               <div>{wordItem.status}</div>
             </li>
           );
         } else {
+          const quizItem = item as Quiz;
           return (
             <li key={index}>
               <h3>Quiz</h3>
-              <div>Correct words: {item.correctWords.join(', ')}</div>
-              <div>Incorrect words: {item.incorrectWords.join(', ')}</div> 
-              <div>{item.createdAt}</div>
+              <div>Correct words: {quizItem.correctWords.join(', ')}</div>
+              <div>Incorrect words: {quizItem.incorrectWords.join(', ')}</div> 
+              <div>{createdAt}</div>
             </li>
           );
         }
@@ -143,5 +139,6 @@ function CalendarList({ mode }: { mode: string }) {
     </ul>
   );
 }
+
 
 export default CalendarList;
